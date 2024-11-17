@@ -1,13 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Hero() {
+  const navigate = useNavigate(); // Initialize the navigate function
+
+  const handleClick = () => {
+    navigate('/users'); // Navigate to the /users page when the button is clicked
+  };
   return (
     <section style={styles.hero}>
       <h2 style={styles.title}>Welcome to Our Landing Page</h2>
       <p style={styles.subtitle}>
         Discover the best solution for your needs with modern, responsive design.
       </p>
-      <button style={styles.button}>Users</button>
+      <button style={styles.button} onClick={handleClick}>Users</button>
     </section>
   );
 }
