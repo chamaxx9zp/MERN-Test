@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 
-const Userforms = () => {
+const UserForm = ({ onAddUser }) => {
   // State for form fields
   const [userId, setUserId] = useState('');
   const [userName, setUserName] = useState('');
@@ -9,8 +9,14 @@ const Userforms = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Submitted:', { userId, userName });
-    // You can add further actions, such as sending data to an API
+    if (userId && userName) {
+      const newUser = { id: userId, name: userName };
+      onAddUser(newUser);  // Pass new user to parent component
+      setUserId('');
+      setUserName('');
+    } else {
+      alert("Please fill in both fields.");
+    }
   };
 
   return (
@@ -53,4 +59,4 @@ const Userforms = () => {
   );
 };
 
-export default Userforms;
+export default UserForm;
