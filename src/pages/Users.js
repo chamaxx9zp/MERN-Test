@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserForm from '../components/Userforms';
 import UserTable from '../components/UserTable';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
+import Axios from 'axios';
 
-const usersData = [
-  { id: 1, name: 'John Doe' },
-  { id: 2, name: 'Jane Smith' },
-  { id: 3, name: 'Alice Johnson' },
-  { id: 4, name: 'Bob Brown' },
-];
 
 function Users() {
-  const [users, setUsers] = useState(usersData);
+  const [users, setUsers] = useState([]);
   const [editUserId, setEditUserId] = useState(null); // Store the ID of the user being edited
   const [editName, setEditName] = useState(''); // Store the name of the user being edited
   const [open, setOpen] = useState(false); // Control the modal open/close
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  // Fetch users from the API
+  const getUsers = () => {
+    Axios.get('http://127.0.0.1:3001/api/users')
+    .then(response => {
+      setUsers(response.data?.response || []);
+    })
+    
+  }
 
   // Handle adding a new user
   const handleAddUser = (newUser) => {
