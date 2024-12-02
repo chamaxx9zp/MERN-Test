@@ -26,7 +26,14 @@ function Users() {
 
   // Handle adding a new user
   const handleAddUser = (newUser) => {
-    setUsers([...users, newUser]);  // Adds the new user to the list
+    Axios.post('http://127.0.0.1:3001/api/createuser', newUser)
+    .then(response => {
+      console.log('User added:', response.data.response);
+      getUsers(); // Refresh the user list after adding
+    })
+    .catch(error => {
+      console.error('Error adding user:', error);
+    });
   };
 
   const handleEdit = (id) => {
